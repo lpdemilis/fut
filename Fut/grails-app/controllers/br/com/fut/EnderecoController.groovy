@@ -3,11 +3,12 @@ package br.com.fut
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.access.annotation.Secured
 
+
+@Secured(['ROLE_USER'])
 class EnderecoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
-	@Secured(['ROLE_USER'])
     def index() {
         redirect(action: "list", params: params)
     }
