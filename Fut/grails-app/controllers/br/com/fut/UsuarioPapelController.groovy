@@ -7,7 +7,7 @@ class UsuarioPapelController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
-	//@Secured(['ROLE_USER'])
+	@Secured(['ROLE_USER'])
     def index() {
         redirect(action: "list", params: params)
     }

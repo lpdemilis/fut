@@ -7,26 +7,26 @@ class GrupoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
-	//@Secured(['ROLE_USER'])
+	@Secured(['ROLE_USER'])
     def index() {
         redirect(action: "list", params: params)
     }
 	
 	def springSecurityService
 
-    def list(Integer max) {
+	def list(Integer max) {
 		def usuario = springSecurityService.currentUser
-				
+
 		def grupoCriteria = Grupo.createCriteria()
 		def grupoInstanceList = grupoCriteria.list(max: params.max?:10, offset: params.offset?:0){
-				if(params.grupos != 'todos'){
-					membros{
-						eq('id', usuario?.id)
-					}
-				}				
-			}        
-        [grupoInstanceList: grupoInstanceList, grupoInstanceTotal: grupoInstanceList.size()]
-    }
+			if(params.grupos != 'todos'){
+				membros{
+					eq('id', usuario?.id)
+				}
+			}
+		}
+		[grupoInstanceList: grupoInstanceList, grupoInstanceTotal: grupoInstanceList.size()]
+	}
 
     def create() {
         [grupoInstance: new Grupo(params)]
