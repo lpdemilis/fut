@@ -22,7 +22,7 @@
 					<g:message code="springSecurity.login.username.label" default="Nome" />
 					
 				</label>				
-				<input type='text' name='j_username' id='username'/>
+				<input type='text' name='j_username' id='username' value="usuario1@email.com"/>
 			</div>
 			
 			<div class="fieldcontain">
@@ -30,7 +30,7 @@
 					<g:message code="springSecurity.login.password.label" default="Nome" />
 					
 				</label>				
-				<input type='password' name='j_password' id='password'/>
+				<input type='password' name='j_password' id='password' value="usuario"/>
 			</div>
 			
 			<div class="fieldcontain" id="remember_me_holder">
@@ -53,7 +53,7 @@
 						
 			<fieldset class="buttons">
 				<g:submitButton name="submit" id="submit" class="save" value="${message(code: 'springSecurity.login.button', default: 'Login')}" />
-				<g:link controller="usuario" class="save" action="create"><g:message code="default.usuario.create.label" default="Registre-se" /></g:link>
+				<g:link controller="usuario" class="edit" action="create"><g:message code="default.usuario.create.label" default="Registre-se" /></g:link>
 			</fieldset>
 		</form>		
 	</div>

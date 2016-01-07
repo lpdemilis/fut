@@ -64,8 +64,19 @@ class GrupoController {
 		def usuarioInstanceList
 		
 		usuarioInstanceList = grupoInstance.membros
+		
+		def partidaCriteria = Partida.createCriteria()
+		def partidaInstanceList = partidaCriteria.list(max: params.max?:10, offset: params.offset?:0){
+			and {
+				grupo{
+					eq('id', id)
+				}
 				
-        [grupoInstance: grupoInstance, usuarioInstanceList: usuarioInstanceList, usuarioInstanceTotal: usuarioInstanceList.size()]
+				gt("dataPartida", new Date())
+			}			
+		} 
+				
+        [grupoInstance: grupoInstance, usuarioInstanceList: usuarioInstanceList, usuarioInstanceTotal: usuarioInstanceList.size(), partidaInstanceList: partidaInstanceList, partidaInstanceTotal: partidaInstanceList.size()]
     }
 
     def edit(Long id) {

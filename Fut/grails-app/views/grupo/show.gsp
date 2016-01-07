@@ -90,6 +90,8 @@
 				</fieldset>
 			</g:form>
 			
+			<g:render template="/partida/list" var="partidaInstanceList"/>
+			
 			<g:render template="/usuario/list" var="usuarioInstanceList"/>
 			
 		</div>
