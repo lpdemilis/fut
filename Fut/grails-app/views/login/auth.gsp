@@ -5,21 +5,17 @@
 </head>
 
 <body>
+
+<div id="create-usuario" class="content scaffold-create" role="main">
+	<h1><g:message code="springSecurity.login.header"/></h1>
+	<g:if test="${flash.message}">
+		<div class="message" role="status">${flash.message}</div>
+	</g:if>		
+</div>	
+		
+
 <div id='login'>
-	<div class='inner'>
-		<div class="fieldcontain">
-			<label></label>			
-			<g:message code="springSecurity.login.header"/>
-		</div>	
-			
-		<g:if test='${flash.message}'>
-			<div class="fieldcontain">
-				<label></label>
-				${flash.message}
-			</div>	
-		</g:if>
-			
-							
+	<div class='inner'>									
 		<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
 			<div class="fieldcontain">
 				<label for="username">
@@ -57,6 +53,7 @@
 						
 			<fieldset class="buttons">
 				<g:submitButton name="submit" id="submit" class="save" value="${message(code: 'springSecurity.login.button', default: 'Login')}" />
+				<g:link controller="usuario" class="save" action="create"><g:message code="default.usuario.create.label" default="Registre-se" /></g:link>
 			</fieldset>
 		</form>		
 	</div>
