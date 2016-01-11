@@ -138,7 +138,7 @@ class PartidaController {
     }
 	
 	def sortearTimes() {
-		def partidaInstance = Partida.get(params.id)
+		def partidaInstance = Partida.get(params.partidaInstanceId)
 						
 		for (time in partidaInstance.times) {
 			time.usuarios = new ArrayList<Usuario>()
@@ -176,7 +176,7 @@ class PartidaController {
 		
 		partidaInstance.save()
 				
-		redirect(action: "show", id: params.id)
+		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times])
 	}
 			
 	def verificarConfirmacao(Long usuarioid, Long partidaid){

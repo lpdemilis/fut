@@ -27,7 +27,13 @@
 				
 <g:render template="/confirmacao/list" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'confirmacao':'Confirmação']"/>
 <g:render template="/confirmacao/list" model="['confirmacaoInstanceList':desconfirmacaoInstanceList, 'confirmacao':'Desconfirmação']"/>
-<g:render template="/time/list" var="timeInstanceList"/>
-<fieldset class="buttons">		
-	<g:link class="create" action="sortearTimes" id="${partidaInstance?.id}"><g:message code="default.time.sortear.label" default="Sortear Times" /></g:link>			
+<div id="times">
+	<g:render template="/time/list" var="timeInstanceList"/>
+</div>
+
+<fieldset class="buttons">
+	<g:formRemote name="myForm" url="[controller: 'partida', action: 'sortearTimes']" update="times">
+		<g:hiddenField name="partidaInstanceId" value="${partidaInstance.id}"/>
+		<g:actionSubmit class="create" value="Sortear Times" name="remover" />
+	</g:formRemote>
 </fieldset>
