@@ -6,6 +6,7 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'partida.label', default: 'Partida')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<g:javascript library="jquery"/>
 	</head>
 	<body>
 		<a href="#show-partida" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -123,13 +124,11 @@
 			</g:form>
 		</div>
 		
-		<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'confirmacao':'Confirmação']"/>
-		<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':desconfirmacaoInstanceList, 'confirmacao':'Desconfirmação']"/>
-		<g:render template="/time/list" var="timeInstanceList"/>
-		<fieldset class="buttons">		
-			<g:link class="create" action="sortearTimes" id="${partidaInstance?.id}"><g:message code="default.time.sortear.label" default="Sortear Times" /></g:link>			
-		</fieldset>	
-				
+		<br>
 
-	</body>
+		<div id="confirmar">
+			<g:render template="/confirmacao/confirmar" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'desconfirmacaoInstanceList':desconfirmacaoInstanceList, 'partidaInstance':partidaInstance]"></g:render>
+		</div>
+
+</body>
 </html>

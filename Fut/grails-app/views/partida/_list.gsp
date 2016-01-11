@@ -24,7 +24,7 @@
 				<g:each in="${partidaInstanceList}" status="i" var="partidaInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${partidaInstance.id}"><g:formatDate date="${partidaInstance.dataPartida}" format="dd/MM/yyyy HH:mm:ss" /></g:link></td>
+						<td><g:link controller="partida" action="show" id="${partidaInstance.id}"><g:formatDate date="${partidaInstance.dataPartida}" format="dd/MM/yyyy HH:mm:ss" /></g:link></td>
 						
 						<td><g:link controller="grupo" action="show" id="${partidaInstance.grupo.id}">${fieldValue(bean: partidaInstance, field: "grupo")}</g:link></td>
 					

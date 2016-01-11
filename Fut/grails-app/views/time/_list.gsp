@@ -5,16 +5,17 @@
 			</g:if>
 			<table>
 				<thead>
-					<tr>
-					
-						<g:sortableColumn property="nome" title="${message(code: 'time.nome.label', default: 'Nome')}" />
+					<tr>				
+						<g:each in="${timeInstanceList}" status="i" var="timeInstance">
+							<th><g:message code="time.nome.label" default="Nome" /></th>
+						</g:each>	
 					
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${timeInstanceList}" status="i" var="timeInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
+				<tr>
+					<g:each in="${timeInstanceList}" status="i" var="timeInstance">
+								
 						<td>
 							<g:link controller="time" action="show" id="${timeInstance.id}">${fieldValue(bean: timeInstance, field: "nome")}</g:link>
 							<table>
@@ -30,11 +31,8 @@
 							</table>	
 						</td>
 					
-					</tr>
-				</g:each>
+					</g:each>
+				</tr>
 				</tbody>
 			</table>
-<%--			<div class="pagination">--%>
-<%--				<g:paginate total="${timeInstanceTotal}" />--%>
-<%--			</div>--%>
 		</div>

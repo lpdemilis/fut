@@ -178,4 +178,21 @@ class PartidaController {
 				
 		redirect(action: "show", id: params.id)
 	}
+			
+	def verificarConfirmacao(Long usuarioid, Long partidaid){
+					
+		def usuarioInstance
+		def partidaInstance = Partida.get(partidaid)
+		def confirmacaoInstance
+		
+		if(usuarioid == null){
+			usuarioInstance = springSecurityService.currentUser			
+		}else{
+			usuarioInstance = Usuario.get(usuarioid)			
+		}	
+		
+		confirmacaoInstance = Confirmacao.findByUsuarioAndPartida(usuarioInstance, partidaInstance)
+		
+		return confirmacaoInstance?.confirmacao  
+	}	
 }

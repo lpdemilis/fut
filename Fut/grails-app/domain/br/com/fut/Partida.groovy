@@ -60,5 +60,10 @@ class Partida {
 	String toString() {
 		grupo.toString() + " " + dataPartida.toString() + " " + local.toString() 
 	}
+	
+	Boolean verificarConfirmacao(id){
+		PartidaController partidaController = new PartidaController()
+		partidaController.verificarConfirmacao(id, this.id)		
+	}
 
 }

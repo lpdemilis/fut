@@ -1,5 +1,7 @@
 package br.com.fut
 
+import java.util.Date;
+
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.access.annotation.Secured
 
@@ -8,6 +10,8 @@ import org.springframework.security.access.annotation.Secured
 class ConfirmacaoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
+	def springSecurityService
 
     def index() {
         redirect(action: "list", params: params)
@@ -102,4 +106,52 @@ class ConfirmacaoController {
             redirect(action: "show", id: id)
         }
     }
+			
+	def confirmar(){			
+		def usuarioInstance
+		 
+		if(params.usuarioid == null){
+			usuarioInstance = springSecurityService.currentUser			
+		}else{
+			usuarioInstance = Usuario.get(params.usuarioid)			
+		}
+		
+		def partidaInstance = Partida.get(params.partidaInstanceId)
+		
+		def confirmacaoInstance = Confirmacao.findByUsuarioAndPartida(usuarioInstance, partidaInstance)
+		
+		if(confirmacaoInstance != null && Boolean.valueOf(params.remover)){
+			confirmacaoInstance.delete(flush: true)	
+		}else{
+			if(confirmacaoInstance == null){
+				confirmacaoInstance = new Confirmacao()
+			}
+			
+			confirmacaoInstance.usuario = usuarioInstance 
+			confirmacaoInstance.partida = partidaInstance
+			confirmacaoInstance.dataConfirmacao = new Date()
+			confirmacaoInstance.confirmacao = Boolean.valueOf(params.confirmacao)
+			confirmacaoInstance.motivo = params.motivo
+					
+			confirmacaoInstance.save(flush: true)
+		}
+		
+		def confirmacaoCriteria = Confirmacao.createCriteria()
+		def confirmacaoInstanceList = confirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', true)
+			}
+		}
+		
+		def desconfirmacaoCriteria = Confirmacao.createCriteria()
+		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', false)
+			}
+		}
+				
+	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times])		
+	}	
 }
