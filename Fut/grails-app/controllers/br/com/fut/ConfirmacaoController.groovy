@@ -122,6 +122,11 @@ class ConfirmacaoController {
 		
 		if(confirmacaoInstance != null && Boolean.valueOf(params.remover)){
 			confirmacaoInstance.delete(flush: true)	
+			for (time in partidaInstance.times) {
+				if (time.usuarios.remove(usuarioInstance)){
+					time.save(flush: true)
+				}	
+			}			
 		}else{
 			if(confirmacaoInstance == null){
 				confirmacaoInstance = new Confirmacao()
@@ -152,6 +157,16 @@ class ConfirmacaoController {
 			}
 		}
 				
-	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times])		
+		def usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+		}
+		
+		if (usuarios != confirmacaoInstanceList.size()){
+			flash.message = message(code: 'default.times.incompetos')
+		}
+		
+	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }])		
 	}	
 }

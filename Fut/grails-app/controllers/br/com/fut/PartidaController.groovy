@@ -75,7 +75,17 @@ class PartidaController {
 			}
 		}
 		
-        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, timeInstanceList: partidaInstance.times, timeInstanceTotal: partidaInstance.times.size()]
+		def usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+		}
+		
+		if (usuarios != confirmacaoInstanceList.size()){
+			flash.message = message(code: 'default.times.incompetos')
+		}		 
+						
+        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size()]
     }
 
     def edit(Long id) {
@@ -175,8 +185,18 @@ class PartidaController {
 		}
 		
 		partidaInstance.save()
-				
-		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times])
+		
+		def usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+		}
+		
+		if (usuarios != confirmacaoInstanceList.size()){
+			flash.message = message(code: 'default.times.incompetos')
+		}
+								
+		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }])
 	}
 			
 	def verificarConfirmacao(Long usuarioid, Long partidaid){
