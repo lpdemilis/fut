@@ -30,8 +30,9 @@
 	</g:else>	
 </fieldset>
 				
-<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'confirmacao':'Confirmação']"/>
-<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':desconfirmacaoInstanceList, 'confirmacao':'Desconfirmação']"/>
+
+<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'desconfirmacaoInstanceList':desconfirmacaoInstanceList]"/>
+
 <div id="times">
 	<g:render template="/time/list" var="timeInstanceList"/>
 </div>
