@@ -76,16 +76,24 @@ class PartidaController {
 		}
 		
 		def usuarios = 0
+		def incompleto = false
+		def desequilibrado = false
+		def time_usuarios = 0
 		
 		for (time in partidaInstance.times) {
 			usuarios += time.usuarios.size()
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()
 		}
 		
 		if (usuarios != confirmacaoInstanceList.size()){
-			flash.message = message(code: 'default.times.incompetos')
+			incompleto = true
 		}		 
 						
-        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size()]
+        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
     }
 
     def edit(Long id) {
@@ -187,16 +195,25 @@ class PartidaController {
 		partidaInstance.save()
 		
 		def usuarios = 0
+		def incompleto = false
+		def desequilibrado = false
+		def time_usuarios = 0
 		
 		for (time in partidaInstance.times) {
 			usuarios += time.usuarios.size()
+			
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()			
 		}
 		
 		if (usuarios != confirmacaoInstanceList.size()){
-			flash.message = message(code: 'default.times.incompetos')
+			incompleto = true
 		}
 								
-		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }])
+		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])
 	}
 			
 	def verificarConfirmacao(Long usuarioid, Long partidaid){

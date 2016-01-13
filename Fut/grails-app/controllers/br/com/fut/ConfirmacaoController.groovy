@@ -158,15 +158,24 @@ class ConfirmacaoController {
 		}
 				
 		def usuarios = 0
+		def incompleto = false
+		def desequilibrado = false
+		def time_usuarios = 0
 		
 		for (time in partidaInstance.times) {
 			usuarios += time.usuarios.size()
+			
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size() 
 		}
 		
 		if (usuarios != confirmacaoInstanceList.size()){
-			flash.message = message(code: 'default.times.incompetos')
+			incompleto = true
 		}
 		
-	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }])		
+	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])		
 	}	
 }

@@ -1,7 +1,10 @@
 		<div id="list-time" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="['Time']" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+			<h1><g:message code="default.list.label" args="['Time']" /></h1>			
+			<g:if test="${incompleto}">
+				<div class="message" role="status">${message(code: 'default.times.incompetos')}</div>
+			</g:if>
+			<g:if test="${desequilibrado}">
+				<div class="message" role="status">${message(code: 'default.times.desequilibrados')}</div>
 			</g:if>
 			<table>
 				<thead>
