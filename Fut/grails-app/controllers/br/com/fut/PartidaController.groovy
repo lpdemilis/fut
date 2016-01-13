@@ -75,6 +75,14 @@ class PartidaController {
 			}
 		}
 		
+		def naoconfirmadosCriteria = Confirmacao.createCriteria()
+		def naoconfirmadosInstanceList = naoconfirmadosCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', false)
+			}
+		}
+		
 		def usuarios = 0
 		def incompleto = false
 		def desequilibrado = false
@@ -93,7 +101,7 @@ class PartidaController {
 			incompleto = true
 		}		 
 						
-        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
+        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
     }
 
     def edit(Long id) {

@@ -156,6 +156,14 @@ class ConfirmacaoController {
 				eq('confirmacao', false)
 			}
 		}
+		
+		def naoconfirmadosCriteria = Confirmacao.createCriteria()
+		def naoconfirmadosInstanceList = naoconfirmadosCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', false)
+			}
+		}
 				
 		def usuarios = 0
 		def incompleto = false
@@ -176,6 +184,6 @@ class ConfirmacaoController {
 			incompleto = true
 		}
 		
-	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])		
+	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, naoconfirmadosInstanceList:naoconfirmadosInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])		
 	}	
 }

@@ -75,6 +75,39 @@
 				</td>	
 			</tr>	
 		</tbody>
+	</table>
+	
+	<table>	
+		<thead>
+			<tr>
+				<th><g:message code="naoconfirmados.label" default="Usuários não confirmados" /></th>				
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+	
+					<table>
+						<thead>
+							<tr>
+								
+								<g:sortableColumn property="usuario" title="${message(code: 'confirmacao.usuario.label', default: 'Usuário')}" />	
+																													
+							</tr>
+						</thead>
+						<tbody>
+						<g:each in="${naoconfirmadosInstanceList}" status="i" var="confirmacaoInstance">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+											
+								<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
+														
+							</tr>
+						</g:each>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
 	</table>	
 <%--	<div class="pagination">--%>
 <%--		<g:paginate total="${confirmacaoInstanceTotal}" />--%>
