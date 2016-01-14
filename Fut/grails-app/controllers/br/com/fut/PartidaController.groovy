@@ -1,5 +1,7 @@
 package br.com.fut
 
+import javax.naming.spi.ContinuationContext;
+
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.access.annotation.Secured
 
@@ -75,14 +77,29 @@ class PartidaController {
 			}
 		}
 		
-		def naoconfirmadosCriteria = Confirmacao.createCriteria()
-		def naoconfirmadosInstanceList = naoconfirmadosCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', false)
+		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
+		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
+		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
+						
+		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
+			for (confirmacaoInstance in confirmacaoInstanceList) {				
+				if (naoconfirmadosInstance.id == confirmacaoInstance.usuario.id){					
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
 			}
+			
+			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {				
+				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
+				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
+			} 
+			
 		}
-		
+				
 		def usuarios = 0
 		def incompleto = false
 		def desequilibrado = false
@@ -101,7 +118,7 @@ class PartidaController {
 			incompleto = true
 		}		 
 						
-        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.size, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
+        [partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
     }
 
     def edit(Long id) {

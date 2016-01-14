@@ -96,10 +96,14 @@
 							</tr>
 						</thead>
 						<tbody>
-						<g:each in="${naoconfirmadosInstanceList}" status="i" var="confirmacaoInstance">
+						<g:each in="${naoconfirmadosInstanceList}" status="i" var="naoconfirmadosInstance">
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 											
-								<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
+								<td>
+									<g:link controller="usuario" action="show" id="${naoconfirmadosInstance.id}">
+										${fieldValue(bean: naoconfirmadosInstance, field: "nome")} <g:if test="${naoconfirmadosInstance.apelido != ""}"> (${fieldValue(bean: naoconfirmadosInstance, field: "apelido")})</g:if>
+									</g:link>
+								</td>
 														
 							</tr>
 						</g:each>
