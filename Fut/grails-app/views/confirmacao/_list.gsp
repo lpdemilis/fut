@@ -21,10 +21,8 @@
 								<g:sortableColumn property="usuario" title="${message(code: 'confirmacao.usuario.label', default: 'Usuário')}" />	
 											
 								<g:sortableColumn property="dataConfirmacao" title="${message(code: 'confirmacao.dataConfirmacao.label', default: 'Data Confirmacao')}" />
-								
-								<g:if test="${confirmacao == 'Desconfirmação'}">
-									<th><g:message code="confirmacao.motivo.label" default="Motivo" /></th>
-								</g:if>	
+																
+								<th><g:message code="confirmacao.acao.label" default="Ação" /></th>
 																									
 							</tr>
 						</thead>
@@ -35,10 +33,8 @@
 								<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
 															
 								<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
-								
-								<g:if test="${confirmacao == 'Desconfirmação'}">
-									<td>${fieldValue(bean: confirmacaoInstance, field: "motivo")}</td>
-								</g:if>					
+																
+								<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
 										
 							</tr>
 						</g:each>
@@ -55,6 +51,8 @@
 								<g:sortableColumn property="dataConfirmacao" title="${message(code: 'confirmacao.dataConfirmacao.label', default: 'Data Confirmacao')}" />
 								
 								<th><g:message code="confirmacao.motivo.label" default="Motivo" /></th>
+								
+								<th><g:message code="confirmacao.acao.label" default="Ação" /></th>
 																																	
 							</tr>
 						</thead>
@@ -67,6 +65,8 @@
 								<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
 								
 								<td>${fieldValue(bean: confirmacaoInstance, field: "motivo")}</td>
+								
+								<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
 										
 							</tr>
 						</g:each>
@@ -91,7 +91,9 @@
 						<thead>
 							<tr>
 								
-								<g:sortableColumn property="usuario" title="${message(code: 'confirmacao.usuario.label', default: 'Usuário')}" />	
+								<g:sortableColumn property="usuario" title="${message(code: 'confirmacao.usuario.label', default: 'Usuário')}" />
+								
+								<th><g:message code="confirmacao.acao.label" default="Ação" /></th>	
 																													
 							</tr>
 						</thead>
@@ -103,6 +105,10 @@
 									<g:link controller="usuario" action="show" id="${naoconfirmadosInstance.id}">
 										${fieldValue(bean: naoconfirmadosInstance, field: "nome")} <g:if test="${naoconfirmadosInstance.apelido != ""}"> (${fieldValue(bean: naoconfirmadosInstance, field: "apelido")})</g:if>
 									</g:link>
+								</td>
+								
+								<td>
+									<g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':naoconfirmadosInstance.id]"/>
 								</td>
 														
 							</tr>

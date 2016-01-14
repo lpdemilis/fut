@@ -157,12 +157,27 @@ class ConfirmacaoController {
 			}
 		}
 		
-		def naoconfirmadosCriteria = Confirmacao.createCriteria()
-		def naoconfirmadosInstanceList = naoconfirmadosCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', false)
+		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
+		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
+		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
+						
+		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
+			for (confirmacaoInstance1 in confirmacaoInstanceList) {				
+				if (naoconfirmadosInstance.id == confirmacaoInstance1.usuario.id){					
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
 			}
+			
+			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {				
+				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
+				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
+			} 
+			
 		}
 				
 		def usuarios = 0
