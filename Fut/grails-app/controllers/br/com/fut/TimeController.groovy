@@ -102,4 +102,22 @@ class TimeController {
             redirect(action: "show", id: id)
         }
     }
+	
+	def marcarGol(){
+		println params
+		
+		def timeInstance = Time.get(params.timeInstanceId)
+		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
+		def partidaInstance = Partida.get(params.partidaInstanceId)
+		
+		Gol golInstance = new Gol()
+		golInstance.usuario = usuarioInstance
+		golInstance.time = timeInstance
+		golInstance.contra = Boolean.valueOf(params.contra)
+		golInstance.dataCriacao = new Date()
+		
+		golInstance.save()
+		
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times, acoes:true])
+	}
 }

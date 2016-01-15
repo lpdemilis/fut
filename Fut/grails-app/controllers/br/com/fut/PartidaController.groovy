@@ -257,4 +257,73 @@ class PartidaController {
 		
 		return confirmacaoInstance?.confirmacao  
 	}	
+	
+	def view(Long id) {
+		def partidaInstance = Partida.get(id)
+		if (!partidaInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'partida.label', default: 'Partida'), id])
+			redirect(action: "list")
+			return
+		}
+		
+				
+		def confirmacaoCriteria = Confirmacao.createCriteria()
+		def confirmacaoInstanceList = confirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', true)
+			}
+		}
+		
+		def desconfirmacaoCriteria = Confirmacao.createCriteria()
+		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', false)
+			}
+		}
+		
+		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
+		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
+		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
+						
+		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
+			for (confirmacaoInstance in confirmacaoInstanceList) {
+				if (naoconfirmadosInstance.id == confirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {
+				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
+				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
+			}
+			
+		}
+				
+		def usuarios = 0
+		def incompleto = false
+		def desequilibrado = false
+		def time_usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()
+		}
+		
+		if (usuarios != confirmacaoInstanceList.size()){
+			incompleto = true
+		}
+						
+		[partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
+	}	
 }

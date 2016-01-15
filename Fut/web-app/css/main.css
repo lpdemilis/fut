@@ -567,7 +567,7 @@ th:hover, tr:hover {
 	text-decoration: underline;
 }
 
-.buttons .delete, .buttons .edit, .buttons .save {
+.buttons .delete, .buttons .edit, .buttons .save, .buttons .confirm, .buttons .cancel, .confirm, .cancel {
 	background-position: 0.7em center;
 	background-repeat: no-repeat;
 	text-indent: 25px;
@@ -590,6 +590,15 @@ th:hover, tr:hover {
 	background-image: url(../images/skin/database_save.png);
 }
 
+.buttons .confirm, .confirm {
+	background-image: url(../images/skin/database_save.png);
+}
+
+.buttons .cancel, .cancel {
+	background-image: url(../images/skin/database_delete.png);
+}
+
+
 a.skip {
 	position: absolute;
 	left: -9999px;
@@ -603,6 +612,11 @@ a.skip {
 }
 
 .confirmar {
+	display: -moz-inline-box;
+	display: inline-flex;
+}
+
+.buttons-outros {
 	display: -moz-inline-box;
 	display: inline-flex;
 }

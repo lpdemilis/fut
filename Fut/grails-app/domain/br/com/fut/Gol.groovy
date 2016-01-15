@@ -12,7 +12,8 @@ class Gol {
     static constraints = {
 		usuario nullable:false 
 		contra nullable:false 
-		dataCriacao nullable:false 
+		dataCriacao nullable:false
+		assistencia nullable:true  
     }
 	
 	def beforeInsert() {

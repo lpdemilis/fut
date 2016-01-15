@@ -6,6 +6,13 @@
 			<g:if test="${desequilibrado}">
 				<div class="message" role="status">${message(code: 'default.times.desequilibrados')}</div>
 			</g:if>
+			
+			<g:if test="${acoes}">
+				<g:each in="${timeInstanceList}" status="i" var="timeInstance">
+					${timeInstance.gols.size()} <g:if test="${i < timeInstanceList.size() - 1}"> X </g:if>
+				</g:each>
+			</g:if>
+			
 			<table>
 				<thead>
 					<tr>				
@@ -28,6 +35,20 @@
 											<td>
 												${usuarioInstance} <g:if test="${usuarioInstance.apelido != ""}"> (${fieldValue(bean: usuarioInstance, field: "apelido")})</g:if>
 											</td>
+											<g:if test="${acoes}">
+												<td>
+													<div class="buttons-outros">
+														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
+															<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+															<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>
+															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
+															<g:hiddenField name="contra" value="false"/>															
+															<g:actionSubmit class="cancel" value="Desconfirmar" name="desconfirmar" />
+														</g:formRemote>													
+													</div>	
+												</td>
+											</g:if>
+											
 										</tr>
 									</g:each>
 								</tbody>
