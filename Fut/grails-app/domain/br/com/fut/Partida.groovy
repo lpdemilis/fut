@@ -65,5 +65,9 @@ class Partida {
 		PartidaController partidaController = new PartidaController()
 		partidaController.verificarConfirmacao(id, this.id)		
 	}
-
+	
+	Integer consultaGols(Long usuarioInstanceId, Boolean contra){
+		PartidaController partidaController = new PartidaController()
+		partidaController.consultaGols(usuarioInstanceId, contra, this.id)
+	}
 }

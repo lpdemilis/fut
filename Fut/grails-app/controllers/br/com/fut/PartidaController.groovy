@@ -326,4 +326,19 @@ class PartidaController {
 						
 		[partidaInstance: partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count, timeInstanceList: partidaInstance.times.sort{ it.id }, timeInstanceTotal: partidaInstance.times.size(), incompleto:incompleto, desequilibrado:desequilibrado]
 	}	
+	
+	def consultaGols(Long usuarioInstanceId, Boolean contra, Long partidaInstanceId){
+		Partida partidaInstance = Partida.get(partidaInstanceId)
+		def total = 0
+		
+		for (time in partidaInstance.times) {
+			for (gol in time.gols) {
+				if (gol.usuario.id == usuarioInstanceId){
+					total++
+				}
+			}
+		}		
+		
+		total
+	}
 }

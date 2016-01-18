@@ -567,7 +567,7 @@ th:hover, tr:hover {
 	text-decoration: underline;
 }
 
-.buttons .delete, .buttons .edit, .buttons .save, .buttons .confirm, .buttons .cancel, .confirm, .cancel {
+.buttons .delete, .buttons .edit, .buttons .save, .buttons .confirm, .buttons .cancel, .save, .delete, .confirm, .cancel {
 	background-position: 0.7em center;
 	background-repeat: no-repeat;
 	text-indent: 25px;
@@ -578,15 +578,15 @@ th:hover, tr:hover {
 	padding-left: 36px;
 }
 
-.buttons .delete {
+.buttons .delete, .delete {
 	background-image: url(../images/skin/database_delete.png);
 }
 
-.buttons .edit {
+.buttons .edit, .edit {
 	background-image: url(../images/skin/database_edit.png);
 }
 
-.buttons .save {
+.buttons .save, .save {
 	background-image: url(../images/skin/database_save.png);
 }
 

@@ -47,13 +47,17 @@
 															<g:actionSubmit class="save" value="+" name="marcarGol" />
 														</g:formRemote>
 														
+														${partidaInstance.consultaGols(usuarioInstance.id, false)}
+<%--													${partidaInstance.consultaGols(usuarioInstance.id, true)}--%>
+																												
 														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
 															<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 															<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
 															<g:hiddenField name="contra" value="false"/>
-															<g:hiddenField name="remover" value="true"/>															
-															<g:actionSubmit class="delete" value="-" name="marcarGol" />
+															<g:hiddenField name="remover" value="true"/>
+															<g:if></g:if>															
+															<g:actionSubmit class="delete" value="-" name="marcarGol"/>
 														</g:formRemote>													
 													</div>	
 												</td>
