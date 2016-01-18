@@ -30,7 +30,7 @@
 							<g:link controller="time" action="show" id="${timeInstance.id}">${fieldValue(bean: timeInstance, field: "nome")}</g:link>
 							<table>
 								<tbody>
-									<g:each in="${timeInstance?.usuarios}" status="k" var="usuarioInstance">
+									<g:each in="${timeInstance?.usuarios.sort{ it.id }}" status="k" var="usuarioInstance">
 										<tr class="${(k % 2) == 0 ? 'even' : 'odd'}">
 											<td>
 												${usuarioInstance} <g:if test="${usuarioInstance.apelido != ""}"> (${fieldValue(bean: usuarioInstance, field: "apelido")})</g:if>
@@ -42,8 +42,18 @@
 															<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 															<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
-															<g:hiddenField name="contra" value="false"/>															
-															<g:actionSubmit class="cancel" value="Desconfirmar" name="desconfirmar" />
+															<g:hiddenField name="contra" value="false"/>
+															<g:hiddenField name="remover" value="false"/>															
+															<g:actionSubmit class="save" value="+" name="marcarGol" />
+														</g:formRemote>
+														
+														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
+															<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+															<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>
+															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
+															<g:hiddenField name="contra" value="false"/>
+															<g:hiddenField name="remover" value="true"/>															
+															<g:actionSubmit class="delete" value="-" name="marcarGol" />
 														</g:formRemote>													
 													</div>	
 												</td>
