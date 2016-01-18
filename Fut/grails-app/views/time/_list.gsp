@@ -34,6 +34,9 @@
 										<tr class="${(k % 2) == 0 ? 'even' : 'odd'}">
 											<td>
 												${usuarioInstance} <g:if test="${usuarioInstance.apelido != ""}"> (${fieldValue(bean: usuarioInstance, field: "apelido")})</g:if>
+												<br>
+												${partidaInstance.consultaGols(usuarioInstance.id, false)}
+												${partidaInstance.consultaGols(usuarioInstance.id, true)}
 											</td>
 											<g:if test="${acoes}">
 												<td>
@@ -46,18 +49,19 @@
 															<g:hiddenField name="remover" value="false"/>															
 															<g:actionSubmit class="save" value="+" name="marcarGol" />
 														</g:formRemote>
-														
-														${partidaInstance.consultaGols(usuarioInstance.id, false)}
-<%--													${partidaInstance.consultaGols(usuarioInstance.id, true)}--%>
-																												
+													
 														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
 															<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 															<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
 															<g:hiddenField name="contra" value="false"/>
 															<g:hiddenField name="remover" value="true"/>
-															<g:if></g:if>															
-															<g:actionSubmit class="delete" value="-" name="marcarGol"/>
+															<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, false) > 0}">															
+																<g:actionSubmit class="delete" value="-" name="marcarGol"/>
+															</g:if>
+															<g:else>
+																<g:actionSubmit class="delete" value="-" name="marcarGol" disabled=""/>
+															</g:else>
 														</g:formRemote>													
 													</div>	
 												</td>

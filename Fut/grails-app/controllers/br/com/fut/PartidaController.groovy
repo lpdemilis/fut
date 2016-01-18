@@ -334,7 +334,13 @@ class PartidaController {
 		for (time in partidaInstance.times) {
 			for (gol in time.gols) {
 				if (gol.usuario.id == usuarioInstanceId){
-					total++
+					if (contra && gol.contra){
+						total++
+					}
+					
+					if (!contra && !gol.contra){
+						total++
+					}
 				}
 			}
 		}		
