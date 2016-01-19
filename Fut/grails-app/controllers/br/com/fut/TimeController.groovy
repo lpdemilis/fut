@@ -130,6 +130,6 @@ class TimeController {
 			golInstance.save(flush: true)
 		}		
 		
-		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id])
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance])
 	}
 }
