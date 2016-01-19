@@ -622,15 +622,45 @@ a.skip {
 }
 
 .gols {
-	background-image: url(../images/skin/database_save.png);
+	background-image: url(../images/skin/soccer.png);
 	background-repeat: no-repeat;
 	padding-left: 20px;
+	background-size: 16px 16px;
 }
 
 .gols-contra {
-	background-image: url(../images/skin/database_delete.png);
+	background-image: url(../images/skin/soccer_contra.png);
 	background-repeat: no-repeat;
 	padding-left: 20px;
+	background-size: 16px 16px;
+}
+
+.gols-add {
+	background-image: url(../images/skin/soccer_add.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	background-size: 16px 16px;	
+}
+
+.gols-contra-add {
+	background-image: url(../images/skin/soccer_contra_add.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	background-size: 16px 16px;
+}
+
+.gols-delete {
+	background-image: url(../images/skin/soccer_delete.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	background-size: 16px 16px;
+}
+
+.gols-contra-delete {
+	background-image: url(../images/skin/soccer_contra_delete.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	background-size: 16px 16px;
 }
 
 /*

@@ -51,7 +51,7 @@
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
 															<g:hiddenField name="contra" value="false"/>
 															<g:hiddenField name="remover" value="false"/>															
-															<g:actionSubmit class="save" value="+" name="marcarGol" />
+															<g:actionSubmit class="gols-add" value="+" name="marcarGol" />
 														</g:formRemote>
 													
 														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
@@ -61,10 +61,10 @@
 															<g:hiddenField name="contra" value="false"/>
 															<g:hiddenField name="remover" value="true"/>
 															<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, false) > 0}">															
-																<g:actionSubmit class="delete" value="-" name="marcarGol"/>
+																<g:actionSubmit class="gols-delete" value="-" name="marcarGol"/>
 															</g:if>
 															<g:else>
-																<g:actionSubmit class="delete" value="-" name="marcarGol" disabled=""/>
+																<g:actionSubmit class="gols-delete" value="-" name="marcarGol" disabled=""/>
 															</g:else>
 														</g:formRemote>
 														
@@ -74,7 +74,7 @@
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
 															<g:hiddenField name="contra" value="true"/>
 															<g:hiddenField name="remover" value="false"/>															
-															<g:actionSubmit class="save" value="+" name="marcarGol" />
+															<g:actionSubmit class="gols-contra-add" value="+" name="marcarGol" />
 														</g:formRemote>
 													
 														<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
@@ -83,11 +83,11 @@
 															<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>
 															<g:hiddenField name="contra" value="true"/>
 															<g:hiddenField name="remover" value="true"/>
-															<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, false) > 0}">															
-																<g:actionSubmit class="delete" value="-" name="marcarGol"/>
+															<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, true) > 0}">															
+																<g:actionSubmit class="gols-contra-delete" value="-" name="marcarGol"/>
 															</g:if>
 															<g:else>
-																<g:actionSubmit class="delete" value="-" name="marcarGol" disabled=""/>
+																<g:actionSubmit class="gols-contra-delete" value="-" name="marcarGol" disabled=""/>
 															</g:else>
 														</g:formRemote>														
 													</div>	
