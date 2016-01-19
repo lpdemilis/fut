@@ -104,12 +104,22 @@ class TimeController {
     }
 	
 	def marcarGol(){
-		def timeInstance = Time.get(params.timeInstanceId)
 		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
 		def partidaInstance = Partida.get(params.partidaInstanceId)
+		def timeInstance
 		
+		if (Boolean.valueOf(params.contra)) {
+			for (time in partidaInstance.times) {
+				if (Long.valueOf(time.id) != Long.valueOf(params.timeInstanceId)){
+					timeInstance = Time.get(time.id)
+				}				
+			}			
+		}else{
+			timeInstance = Time.get(params.timeInstanceId)
+		}
+				
 		if (Boolean.valueOf(params.remover)){
-			Gol golInstance = Gol.findByUsuarioAndTimeAndContra(usuarioInstance,timeInstance,false,[max: 1, sort: "id", order: "desc"])
+			Gol golInstance = Gol.findByUsuarioAndTimeAndContra(usuarioInstance,timeInstance,Boolean.valueOf(params.contra),[max: 1, sort: "id", order: "desc"])
 			golInstance.delete(flush: true)
 		}else{
 			Gol golInstance = new Gol()

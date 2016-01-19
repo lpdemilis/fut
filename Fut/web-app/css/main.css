@@ -621,6 +621,18 @@ a.skip {
 	display: inline-flex;
 }
 
+.gols {
+	background-image: url(../images/skin/database_save.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+.gols-contra {
+	background-image: url(../images/skin/database_delete.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
 /*
 	
 	#login {
