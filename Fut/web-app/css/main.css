@@ -621,6 +621,24 @@ a.skip {
 	display: inline-flex;
 }
 
+.buttons-actions {
+	display: -moz-inline-box;
+	display: inline-flex;
+}
+
+.buttons-actions input {
+	background-color: transparent;
+	border: none;
+	width: 25px;
+}
+
+.buttons-actions input:disabled {
+	background-color: transparent;
+	border: none;
+	width: 25px;
+	background-color: red;	
+}
+
 .gols {
 	background-image: url(../images/skin/soccer.png);
 	background-repeat: no-repeat;
@@ -638,29 +656,33 @@ a.skip {
 .gols-add {
 	background-image: url(../images/skin/soccer_add.png);
 	background-repeat: no-repeat;
-	padding-left: 20px;
-	background-size: 16px 16px;	
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
 }
 
 .gols-contra-add {
 	background-image: url(../images/skin/soccer_contra_add.png);
 	background-repeat: no-repeat;
-	padding-left: 20px;
 	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;
 }
 
 .gols-delete {
 	background-image: url(../images/skin/soccer_delete.png);
 	background-repeat: no-repeat;
-	padding-left: 20px;
 	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;
 }
 
 .gols-contra-delete {
 	background-image: url(../images/skin/soccer_contra_delete.png);
 	background-repeat: no-repeat;
-	padding-left: 20px;
 	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;
 }
 
 /*
