@@ -28,15 +28,42 @@
 						</thead>
 						<tbody>
 						<g:each in="${confirmacaoInstanceList}" status="i" var="confirmacaoInstance">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-							
-								<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
-															
-								<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
+							<g:if test="${!confirmacaoInstance.verificarTime() || !acoes}">
+								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+								
+									<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
 																
-								<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
-										
-							</tr>
+									<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
+									<g:if test="${acoes}">								
+										<td>
+											<div class="buttons-actions">
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
+<%--													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>--%>
+<%--													<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>--%>
+<%--													<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>--%>
+<%--													<g:hiddenField name="contra" value="false"/>--%>
+<%--													<g:hiddenField name="remover" value="false"/>															--%>
+													<g:actionSubmit class="gols-add" value=" " name="marcarGol" title="Marcar Gol"/>															
+												</g:formRemote>
+												
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
+<%--													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>--%>
+<%--													<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>--%>
+<%--													<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>--%>
+<%--													<g:hiddenField name="contra" value="false"/>--%>
+<%--													<g:hiddenField name="remover" value="false"/>															--%>
+													<g:actionSubmit class="gols-add" value=" " name="marcarGol" title="Marcar Gol"/>															
+												</g:formRemote>
+											</div>	
+										</td>
+									</g:if>
+									<g:else>
+										<td>
+											<g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/>
+										</td>
+									</g:else>		
+								</tr>
+							</g:if>	
 						</g:each>
 						</tbody>
 					</table>
@@ -58,17 +85,19 @@
 						</thead>
 						<tbody>
 						<g:each in="${desconfirmacaoInstanceList}" status="i" var="confirmacaoInstance">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-							
-								<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
-															
-								<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
+							<g:if test="${!confirmacaoInstance.verificarTime() || !acoes}">
+								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 								
-								<td>${fieldValue(bean: confirmacaoInstance, field: "motivo")}</td>
-								
-								<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
-										
-							</tr>
+									<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
+																
+									<td><g:formatDate date="${confirmacaoInstance.dataConfirmacao}" format="dd/MM/yyyy HH:mm:ss"/></td>
+									
+									<td>${fieldValue(bean: confirmacaoInstance, field: "motivo")}</td>
+									
+									<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
+											
+								</tr>
+							</g:if>	
 						</g:each>
 						</tbody>
 					</table>

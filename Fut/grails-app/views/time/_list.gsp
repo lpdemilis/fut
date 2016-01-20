@@ -137,4 +137,8 @@
 				</tr>
 				</tbody>
 			</table>
+			
+			<g:if test="${acoes}">
+				<g:render template="/confirmacao/list" model="['confirmacaoInstanceList':confirmacaoInstanceList, 'desconfirmacaoInstanceList':desconfirmacaoInstanceList, 'acoes':true]"/>
+			</g:if>
 		</div>

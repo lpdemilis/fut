@@ -29,4 +29,10 @@ class Confirmacao {
 	String toString() {
 		usuario.toString() + " (" + dataConfirmacao.toString() + ")"
 	}
+	
+	Boolean verificarTime(){
+		ConfirmacaoController confirmacaoController = new ConfirmacaoController()
+		confirmacaoController.verificarTime(id)
+		
+	}
 }
