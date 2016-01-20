@@ -132,4 +132,61 @@ class TimeController {
 		
 		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance])
 	}
+	
+	def trocarTime(){
+		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
+		def partidaInstance = Partida.get(params.partidaInstanceId)
+		def timeInstance = Time.get(params.timeInstanceId)
+		
+		timeInstance.usuarios.remove(usuarioInstance)
+		
+		for (time in partidaInstance.times) {
+			if (Long.valueOf(time.id) != Long.valueOf(params.timeInstanceId)){
+				timeInstance = Time.get(time.id)
+				timeInstance.usuarios.add(usuarioInstance)
+			}
+		}
+		
+		partidaInstance.save(flush: true)
+		
+		def usuarios = 0		
+		def desequilibrado = false
+		def time_usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()
+		}
+				
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+	}
+	
+	def removerJogador(){
+		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
+		def partidaInstance = Partida.get(params.partidaInstanceId)
+		def timeInstance = Time.get(params.timeInstanceId)
+		
+		timeInstance.usuarios.remove(usuarioInstance)
+						
+		partidaInstance.save(flush: true)
+		
+		def usuarios = 0
+		def desequilibrado = false
+		def time_usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()
+		}
+				
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+	}
 }

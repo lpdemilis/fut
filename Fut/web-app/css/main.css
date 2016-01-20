@@ -710,6 +710,30 @@ a.skip {
 	font-weight: bold;
 	padding: 20px;
 }
+
+.trocar-time-direita {
+	background-image: url(../images/skin/arrow_switch_right.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
+}
+
+.trocar-time-esquerda {
+	background-image: url(../images/skin/arrow_switch_left.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
+}
+
+.exit {
+	background-image: url(../images/skin/exit.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
+}
 /*
 	
 	#login {
