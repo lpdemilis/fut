@@ -8,9 +8,11 @@
 			</g:if>
 			
 			<g:if test="${acoes}">
-				<g:each in="${timeInstanceList}" status="i" var="timeInstance">
-					${timeInstance.gols.size()} <g:if test="${i < timeInstanceList.size() - 1}"> X </g:if>
-				</g:each>
+				<div class="placar">
+					<g:each in="${timeInstanceList}" status="i" var="timeInstance">
+						${timeInstance.gols.size()} <g:if test="${i < timeInstanceList.size() - 1}"> x </g:if>
+					</g:each>
+				</div>
 			</g:if>
 			
 			<table>
@@ -26,7 +28,7 @@
 				<tr>
 					<g:each in="${timeInstanceList}" status="i" var="timeInstance">
 								
-						<td>
+						<td width="50%">
 							<g:link controller="time" action="show" id="${timeInstance.id}">${fieldValue(bean: timeInstance, field: "nome")}</g:link>
 							<table>
 								<tbody>
@@ -36,10 +38,18 @@
 												${usuarioInstance} <g:if test="${usuarioInstance.apelido != ""}"> (${fieldValue(bean: usuarioInstance, field: "apelido")})</g:if>
 												<br>
 												<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, false) > 0}">
-													<span class="gols">(${partidaInstance.consultaGols(usuarioInstance.id, false)})</span>
+													<span class="gols">
+<%--													<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, false) > 1}">--%>
+															(${partidaInstance.consultaGols(usuarioInstance.id, false)})
+<%--													</g:if>--%>
+													</span>
 												</g:if>
 												<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, true) > 0}">
-													<span class="gols-contra">(${partidaInstance.consultaGols(usuarioInstance.id, true)})</span>													
+													<span class="gols-contra">
+<%--													<g:if test="${partidaInstance.consultaGols(usuarioInstance.id, true) > 1}">--%>
+															(${partidaInstance.consultaGols(usuarioInstance.id, true)})
+<%--													</g:if>--%>
+													</span>													
 												</g:if>
 											</td>
 											<g:if test="${acoes}">
@@ -64,7 +74,7 @@
 																<g:actionSubmit class="gols-delete" value=" " name="marcarGol"/>
 															</g:if>
 															<g:else>
-																<g:actionSubmit class="gols-delete" value=" " name="marcarGol" disabled=""/>
+																<g:actionSubmit class="gols-delete-disabled" value=" " name="marcarGol" disabled=""/>
 															</g:else>
 														</g:formRemote>
 														
@@ -87,7 +97,7 @@
 																<g:actionSubmit class="gols-contra-delete" value=" " name="marcarGol"/>
 															</g:if>
 															<g:else>
-																<g:actionSubmit class="gols-contra-delete" value=" " name="marcarGol" disabled=""/>
+																<g:actionSubmit class="gols-contra-delete-disabled" value=" " name="marcarGol" disabled=""/>
 															</g:else>
 														</g:formRemote>														
 													</div>	

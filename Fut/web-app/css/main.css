@@ -636,7 +636,7 @@ a.skip {
 	background-color: transparent;
 	border: none;
 	width: 25px;
-	background-color: red;	
+    cursor: not-allowed;
 }
 
 .gols {
@@ -685,6 +685,31 @@ a.skip {
 	cursor: pointer;
 }
 
+.gols-delete-disabled {
+	background-image: url(../images/skin/soccer_contra_delete_disable.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	opacity: 0.4;
+    filter: alpha(opacity=40); /*For IE8 and earlier*/
+	
+}
+
+.gols-contra-delete-disabled {
+	background-image: url(../images/skin/soccer_contra_delete_disable.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	opacity: 0.4;
+    filter: alpha(opacity=40); /*For IE8 and earlier*/
+}
+
+.placar {
+	text-align: center;
+	font-size: 3em;
+	font-weight: bold;
+	padding: 20px;
+}
 /*
 	
 	#login {
