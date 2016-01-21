@@ -5,6 +5,8 @@ import javax.naming.spi.ContinuationContext;
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.access.annotation.Secured
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 
 @Secured(['ROLE_USER'])
 class PartidaController {
@@ -61,44 +63,9 @@ class PartidaController {
         }
 		
 				
-		def confirmacaoCriteria = Confirmacao.createCriteria()
-		def confirmacaoInstanceList = confirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', true)
-			}
-		}
-		
-		def desconfirmacaoCriteria = Confirmacao.createCriteria()
-		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', false)
-			}
-		}
-		
-		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
-		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
-		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
-						
-		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
-			for (confirmacaoInstance in confirmacaoInstanceList) {				
-				if (naoconfirmadosInstance.id == confirmacaoInstance.usuario.id){					
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {				
-				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
-				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
-			} 
-			
-		}
+		def confirmacaoInstanceList = getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = getNaoconfirmadosInstanceList(partidaInstance)
 				
 		def usuarios = 0
 		def incompleto = false
@@ -187,15 +154,9 @@ class PartidaController {
 			time.usuarios = new ArrayList<Usuario>()
 		}
 		
-		partidaInstance.save()
+		partidaInstance.save(flush:true)
 		
-		def confirmacaoCriteria = Confirmacao.createCriteria()
-		def confirmacaoInstanceList = confirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', true)
-			}
-		}
+		def confirmacaoInstanceList = getConfirmacaoInstanceList(partidaInstance)
 		
 		Collections.shuffle(confirmacaoInstanceList)
 		
@@ -217,7 +178,7 @@ class PartidaController {
 			i++
 		}
 		
-		partidaInstance.save()
+		partidaInstance.save(flush: true)
 		
 		def usuarios = 0
 		def incompleto = false
@@ -237,8 +198,8 @@ class PartidaController {
 		if (usuarios != confirmacaoInstanceList.size()){
 			incompleto = true
 		}
-								
-		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])
+						
+		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado, partidaInstance:partidaInstance])
 	}
 			
 	def verificarConfirmacao(Long usuarioid, Long partidaid){
@@ -267,44 +228,9 @@ class PartidaController {
 		}
 		
 				
-		def confirmacaoCriteria = Confirmacao.createCriteria()
-		def confirmacaoInstanceList = confirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', true)
-			}
-		}
-		
-		def desconfirmacaoCriteria = Confirmacao.createCriteria()
-		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', false)
-			}
-		}
-		
-		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
-		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
-		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
-						
-		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
-			for (confirmacaoInstance in confirmacaoInstanceList) {
-				if (naoconfirmadosInstance.id == confirmacaoInstance.usuario.id){
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {
-				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
-				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
-			}
-			
-		}
+		def confirmacaoInstanceList = getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = getNaoconfirmadosInstanceList(partidaInstance)
 				
 		def usuarios = 0
 		def incompleto = false
@@ -347,4 +273,55 @@ class PartidaController {
 		
 		total
 	}
+	
+	def getConfirmacaoInstanceList(Partida partidaInstance){
+		def confirmacaoCriteria = Confirmacao.createCriteria()
+		def confirmacaoInstanceList = confirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', true)
+			}
+		}
+		return confirmacaoInstanceList 
+	}
+	
+	def getDesconfirmacaoInstanceList(Partida partidaInstance){
+		def desconfirmacaoCriteria = Confirmacao.createCriteria()
+		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
+			and {
+				eq('partida', partidaInstance)
+				eq('confirmacao', false)
+			}
+		}
+		return desconfirmacaoInstanceList
+	}
+	
+	def getNaoconfirmadosInstanceList(Partida partidaInstance){
+		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
+		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
+		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
+		
+		def confirmacaoInstanceList = getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = getDesconfirmacaoInstanceList(partidaInstance)
+						
+		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
+			for (confirmacaoInstance in confirmacaoInstanceList) {
+				if (naoconfirmadosInstance.id == confirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {
+				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
+					idsConfirmados.add(naoconfirmadosInstance.id)
+				}
+			}
+			
+			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
+				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
+			}
+			
+		}
+		return naoconfirmadosInstanceList
+	}	
 }

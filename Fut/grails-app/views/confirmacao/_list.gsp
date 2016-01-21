@@ -37,22 +37,18 @@
 									<g:if test="${acoes}">								
 										<td>
 											<div class="buttons-actions">
-												<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
-<%--													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>--%>
-<%--													<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>--%>
-<%--													<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>--%>
-<%--													<g:hiddenField name="contra" value="false"/>--%>
-<%--													<g:hiddenField name="remover" value="false"/>															--%>
-													<g:actionSubmit class="gols-add" value=" " name="marcarGol" title="Marcar Gol"/>															
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
+													<g:hiddenField name="time" value="1"/>															
+													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
 												</g:formRemote>
 												
-												<g:formRemote name="myForm" url="[controller: 'time', action: 'marcarGol']" update="partida">
-<%--													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>--%>
-<%--													<g:hiddenField name="timeInstanceId" value="${timeInstance.id}"/>--%>
-<%--													<g:hiddenField name="usuarioInstanceId" value="${usuarioInstance.id}"/>--%>
-<%--													<g:hiddenField name="contra" value="false"/>--%>
-<%--													<g:hiddenField name="remover" value="false"/>															--%>
-													<g:actionSubmit class="gols-add" value=" " name="marcarGol" title="Marcar Gol"/>															
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
+													<g:hiddenField name="time" value="2"/>															
+													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
 												</g:formRemote>
 											</div>	
 										</td>

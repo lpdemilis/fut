@@ -116,7 +116,7 @@ class ConfirmacaoController {
 			usuarioInstance = Usuario.get(params.usuarioid)			
 		}
 		
-		def partidaInstance = Partida.get(params.partidaInstanceId)
+		Partida partidaInstance = Partida.get(params.partidaInstanceId)
 		
 		def confirmacaoInstance = Confirmacao.findByUsuarioAndPartida(usuarioInstance, partidaInstance)
 		
@@ -141,44 +141,10 @@ class ConfirmacaoController {
 			confirmacaoInstance.save(flush: true)
 		}
 		
-		def confirmacaoCriteria = Confirmacao.createCriteria()
-		def confirmacaoInstanceList = confirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', true)
-			}
-		}
-		
-		def desconfirmacaoCriteria = Confirmacao.createCriteria()
-		def desconfirmacaoInstanceList = desconfirmacaoCriteria.list(){
-			and {
-				eq('partida', partidaInstance)
-				eq('confirmacao', false)
-			}
-		}
-		
-		ArrayList<Usuario> naoconfirmadosInstanceListAux = partidaInstance.grupo.membros
-		ArrayList<Usuario> naoconfirmadosInstanceList = new ArrayList<Usuario>()
-		ArrayList<Long> idsConfirmados = new ArrayList<Long>()
-						
-		for (naoconfirmadosInstance in naoconfirmadosInstanceListAux) {
-			for (confirmacaoInstance1 in confirmacaoInstanceList) {				
-				if (naoconfirmadosInstance.id == confirmacaoInstance1.usuario.id){					
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			for (desconfirmacaoInstance in desconfirmacaoInstanceList) {				
-				if (naoconfirmadosInstance.id == desconfirmacaoInstance.usuario.id){
-					idsConfirmados.add(naoconfirmadosInstance.id)
-				}
-			}
-			
-			if (!idsConfirmados.contains(naoconfirmadosInstance.id)){
-				naoconfirmadosInstanceList.add(naoconfirmadosInstance)
-			} 
-			
-		}
+		PartidaController partidaController = new PartidaController()		
+		def confirmacaoInstanceList = partidaController.getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = partidaController.getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = partidaController.getNaoconfirmadosInstanceList(partidaInstance)
 				
 		def usuarios = 0
 		def incompleto = false

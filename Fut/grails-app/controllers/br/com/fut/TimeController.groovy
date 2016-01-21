@@ -189,4 +189,34 @@ class TimeController {
 				
 		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
 	}
+	
+	def adicionarJogador(){
+		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
+		def partidaInstance = Partida.get(params.partidaInstanceId)
+		Time timeInstance
+		if(params.time == 1){ 
+			timeInstance = partidaInstance.times.toArray()[0]
+		}else{
+			timeInstance = partidaInstance.times.toArray()[1]
+		}
+		
+		timeInstance.usuarios.add(usuarioInstance)
+						
+		partidaInstance.save(flush: true)
+		
+		def usuarios = 0
+		def desequilibrado = false
+		def time_usuarios = 0
+		
+		for (time in partidaInstance.times) {
+			usuarios += time.usuarios.size()
+			if ((Math.abs(time_usuarios - time.usuarios.size()) > 1) && time_usuarios != 0) {
+				desequilibrado = true
+			}
+			
+			time_usuarios = time.usuarios.size()
+		}
+				
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+	}
 }
