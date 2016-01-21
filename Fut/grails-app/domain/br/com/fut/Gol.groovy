@@ -6,8 +6,7 @@ class Gol {
 	Usuario assistencia
 	Boolean contra
 	Date dataCriacao
-	
-	static belongsTo = [time:Time]
+	Time time
 	
     static constraints = {
 		usuario nullable:false 

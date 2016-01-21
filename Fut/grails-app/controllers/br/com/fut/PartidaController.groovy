@@ -152,7 +152,12 @@ class PartidaController {
 						
 		for (time in partidaInstance.times) {
 			time.usuarios = new ArrayList<Usuario>()
-		}
+			
+			def gols = Gol.findAllByTime(time)
+			for (gol in gols) {
+				gol.delete()
+			}
+		}		
 		
 		partidaInstance.save(flush:true)
 		
@@ -324,4 +329,17 @@ class PartidaController {
 		}
 		return naoconfirmadosInstanceList
 	}	
+	
+	def verificarTime(Usuario usuarioInstance, Long partidaInstanceId){
+		Partida partidaInstance = Partida.get(partidaInstanceId)
+		for (time in partidaInstance.times) {
+			for (usuario in time.usuarios) {
+				if (usuario.id == usuarioInstance.id){
+					return true
+				}
+			}
+		}
+			
+		return false
+	}
 }

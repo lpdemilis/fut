@@ -128,9 +128,14 @@ class TimeController {
 			golInstance.contra = Boolean.valueOf(params.contra)
 			golInstance.dataCriacao = new Date()
 			golInstance.save(flush: true)
-		}		
+		}	
 		
-		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance])
+		PartidaController partidaController = new PartidaController()
+		def confirmacaoInstanceList = partidaController.getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = partidaController.getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = partidaController.getNaoconfirmadosInstanceList(partidaInstance)
+		
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count])
 	}
 	
 	def trocarTime(){
@@ -161,8 +166,13 @@ class TimeController {
 			
 			time_usuarios = time.usuarios.size()
 		}
+		
+		PartidaController partidaController = new PartidaController()
+		def confirmacaoInstanceList = partidaController.getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = partidaController.getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = partidaController.getNaoconfirmadosInstanceList(partidaInstance)
 				
-		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count])
 	}
 	
 	def removerJogador(){
@@ -186,8 +196,13 @@ class TimeController {
 			
 			time_usuarios = time.usuarios.size()
 		}
+		
+		PartidaController partidaController = new PartidaController()
+		def confirmacaoInstanceList = partidaController.getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = partidaController.getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = partidaController.getNaoconfirmadosInstanceList(partidaInstance)
 				
-		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count])
 	}
 	
 	def adicionarJogador(){
@@ -216,7 +231,12 @@ class TimeController {
 			
 			time_usuarios = time.usuarios.size()
 		}
+		
+		PartidaController partidaController = new PartidaController()
+		def confirmacaoInstanceList = partidaController.getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = partidaController.getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = partidaController.getNaoconfirmadosInstanceList(partidaInstance)
 				
-		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado])
+		render(template: "list",  model: [timeInstanceList:partidaInstance.times.sort{ it.id }, acoes:true, partidaInstanceId:partidaInstance.id, partidaInstance:partidaInstance, desequilibrado:desequilibrado, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count])
 	}
 }

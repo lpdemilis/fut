@@ -28,7 +28,7 @@
 						</thead>
 						<tbody>
 						<g:each in="${confirmacaoInstanceList}" status="i" var="confirmacaoInstance">
-							<g:if test="${!confirmacaoInstance.verificarTime() || !acoes}">
+							<g:if test="${!partidaInstance.verificarTime(confirmacaoInstance.usuario) || !acoes}">
 								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 								
 									<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
@@ -81,7 +81,7 @@
 						</thead>
 						<tbody>
 						<g:each in="${desconfirmacaoInstanceList}" status="i" var="confirmacaoInstance">
-							<g:if test="${!confirmacaoInstance.verificarTime() || !acoes}">
+							<g:if test="${!partidaInstance.verificarTime(confirmacaoInstance.usuario) || !acoes}">
 								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 								
 									<td><g:link controller="usuario" action="show" id="${confirmacaoInstance.usuario.id}">${fieldValue(bean: confirmacaoInstance, field: "usuario")}<g:if test="${confirmacaoInstance.usuario.apelido != ""}"> (${fieldValue(bean: confirmacaoInstance.usuario, field: "apelido")})</g:if></g:link></td>
@@ -90,8 +90,30 @@
 									
 									<td>${fieldValue(bean: confirmacaoInstance, field: "motivo")}</td>
 									
-									<td><g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/></td>
-											
+									<g:if test="${acoes}">								
+										<td>
+											<div class="buttons-actions">
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
+													<g:hiddenField name="time" value="1"/>															
+													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
+												</g:formRemote>
+												
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
+													<g:hiddenField name="time" value="2"/>															
+													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
+												</g:formRemote>
+											</div>	
+										</td>
+									</g:if>
+									<g:else>
+										<td>
+											<g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':confirmacaoInstance.usuario.id]"/>
+										</td>
+									</g:else>											
 								</tr>
 							</g:if>	
 						</g:each>
@@ -124,19 +146,42 @@
 						</thead>
 						<tbody>
 						<g:each in="${naoconfirmadosInstanceList}" status="i" var="naoconfirmadosInstance">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-											
-								<td>
-									<g:link controller="usuario" action="show" id="${naoconfirmadosInstance.id}">
-										${fieldValue(bean: naoconfirmadosInstance, field: "nome")} <g:if test="${naoconfirmadosInstance.apelido != ""}"> (${fieldValue(bean: naoconfirmadosInstance, field: "apelido")})</g:if>
-									</g:link>
-								</td>
-								
-								<td>
-									<g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':naoconfirmadosInstance.id]"/>
-								</td>
-														
-							</tr>
+							<g:if test="${!partidaInstance.verificarTime(naoconfirmadosInstance) || !acoes}">
+								<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+												
+									<td>
+										<g:link controller="usuario" action="show" id="${naoconfirmadosInstance.id}">
+											${fieldValue(bean: naoconfirmadosInstance, field: "nome")} <g:if test="${naoconfirmadosInstance.apelido != ""}"> (${fieldValue(bean: naoconfirmadosInstance, field: "apelido")})</g:if>
+										</g:link>
+									</td>
+									
+									<g:if test="${acoes}">								
+										<td>
+											<div class="buttons-actions">
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${naoconfirmadosInstance.id}"/>
+													<g:hiddenField name="time" value="1"/>															
+													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
+												</g:formRemote>
+												
+												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
+													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
+													<g:hiddenField name="usuarioInstanceId" value="${naoconfirmadosInstance.id}"/>
+													<g:hiddenField name="time" value="2"/>															
+													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
+												</g:formRemote>
+											</div>	
+										</td>
+									</g:if>
+									<g:else>
+										<td>
+											<g:render template="/confirmacao/confirmarOutro" model="['partidaInstance':partidaInstance, 'usuarioid':naoconfirmadosInstance.id]"/>
+										</td>
+									</g:else>						
+															
+								</tr>
+							</g:if>	
 						</g:each>
 						</tbody>
 					</table>

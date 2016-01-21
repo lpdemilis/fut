@@ -734,6 +734,22 @@ a.skip {
 	background-position: center;
 	cursor: pointer;	
 }
+
+.time-1 {
+	background-image: url(../images/skin/exit.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
+}
+
+.time-2 {
+	background-image: url(../images/skin/exit.png);
+	background-repeat: no-repeat;
+	background-size: 16px 16px;
+	background-position: center;
+	cursor: pointer;	
+}
 /*
 	
 	#login {

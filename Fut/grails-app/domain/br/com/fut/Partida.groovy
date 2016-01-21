@@ -70,4 +70,9 @@ class Partida {
 		PartidaController partidaController = new PartidaController()
 		partidaController.consultaGols(usuarioInstanceId, contra, this.id)
 	}
+	
+	Boolean verificarTime(Usuario usuarioInstance){
+		PartidaController partidaController = new PartidaController()
+		partidaController.verificarTime(usuarioInstance, id)		
+	}
 }

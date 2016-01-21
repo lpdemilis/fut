@@ -167,17 +167,4 @@ class ConfirmacaoController {
 		
 	    render(template: "confirmar", model: [confirmacaoInstanceList:confirmacaoInstanceList, desconfirmacaoInstanceList:desconfirmacaoInstanceList, naoconfirmadosInstanceList:naoconfirmadosInstanceList, partidaInstance:partidaInstance, timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado])		
 	}	
-	
-	def verificarTime(id){
-		Confirmacao confirmacaoInstance = Confirmacao.get(id)
-		for (time in confirmacaoInstance.partida.times) {
-			for (usuario in time.usuarios) {
-				if (usuario.id == confirmacaoInstance.usuario.id){
-					return true
-				}	
-			}			
-		}	
-			
-		return false
-	}
 }
