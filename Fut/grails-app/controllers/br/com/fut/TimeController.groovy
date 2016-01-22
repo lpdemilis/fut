@@ -209,10 +209,10 @@ class TimeController {
 		def usuarioInstance = Usuario.get(params.usuarioInstanceId)
 		def partidaInstance = Partida.get(params.partidaInstanceId)
 		Time timeInstance
-		if(params.time == 1){ 
-			timeInstance = partidaInstance.times.toArray()[0]
+		if(params.time.toString() == "1"){
+			timeInstance = partidaInstance.times.sort{ it.id }.toArray()[0]
 		}else{
-			timeInstance = partidaInstance.times.toArray()[1]
+			timeInstance = partidaInstance.times.sort{ it.id }.toArray()[1]
 		}
 		
 		timeInstance.usuarios.add(usuarioInstance)

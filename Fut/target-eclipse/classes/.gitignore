@@ -1,8 +1,10 @@
-/grails/
-/org/
-/DbdocUrlMappings$__clinit__closure1.class
-/DbdocUrlMappings.class
 /br/
+/com/
+/dbdoc/
+/grails/
+/hibernate/
+/messages.properties
+/org/
 /ApplicationResources$_run_closure1.class
 /ApplicationResources$_run_closure1_closure2.class
 /ApplicationResources.class
@@ -31,6 +33,8 @@
 /DataSource$_run_closure3_closure6.class
 /DataSource$_run_closure3_closure6_closure10.class
 /DataSource.class
+/DbdocUrlMappings$__clinit__closure1.class
+/DbdocUrlMappings.class
 /DefaultCacheConfig$_run_closure1.class
 /DefaultCacheConfig$_run_closure1_closure2.class
 /DefaultCacheConfig$_run_closure1_closure3.class
@@ -83,6 +87,5 @@
 /UrlMappings$__clinit__closure1_closure2.class
 /UrlMappings$__clinit__closure1_closure2_closure3.class
 /UrlMappings.class
-/com/
 /resources$_run_closure1.class
 /resources.class
