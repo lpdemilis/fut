@@ -1,9 +1,4 @@
-/br/
-/com/
-/dbdoc/
 /grails/
-/hibernate/
-/messages.properties
 /org/
 /ApplicationResources$_run_closure1.class
 /ApplicationResources$_run_closure1_closure2.class
@@ -87,5 +82,7 @@
 /UrlMappings$__clinit__closure1_closure2.class
 /UrlMappings$__clinit__closure1_closure2_closure3.class
 /UrlMappings.class
+/br/
+/com/
 /resources$_run_closure1.class
 /resources.class

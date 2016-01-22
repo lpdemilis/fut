@@ -162,6 +162,8 @@ class PartidaController {
 		partidaInstance.save(flush:true)
 		
 		def confirmacaoInstanceList = getConfirmacaoInstanceList(partidaInstance)
+		def desconfirmacaoInstanceList = getDesconfirmacaoInstanceList(partidaInstance)
+		def naoconfirmadosInstanceList = getNaoconfirmadosInstanceList(partidaInstance)
 		
 		Collections.shuffle(confirmacaoInstanceList)
 		
@@ -203,8 +205,8 @@ class PartidaController {
 		if (usuarios != confirmacaoInstanceList.size()){
 			incompleto = true
 		}
-						
-		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado, partidaInstance:partidaInstance])
+								
+		render(template: "/time/list", model: [timeInstanceList:partidaInstance.times.sort{ it.id }, incompleto:incompleto, desequilibrado:desequilibrado, partidaInstance:partidaInstance, acoes: params.acoes, confirmacaoInstanceList: confirmacaoInstanceList, confirmacaoInstanceTotal: confirmacaoInstanceList.size, desconfirmacaoInstanceList: desconfirmacaoInstanceList, desconfirmacaoInstanceTotal: desconfirmacaoInstanceList.size, naoconfirmadosInstanceList:naoconfirmadosInstanceList.sort{ it.nome }, naoconfirmadosInstanceListTotal:naoconfirmadosInstanceList.count])
 	}
 			
 	def verificarConfirmacao(Long usuarioid, Long partidaid){

@@ -736,7 +736,7 @@ a.skip {
 }
 
 .time-1 {
-	background-image: url(../images/skin/exit.png);
+	background-image: url(../images/skin/time1.png);
 	background-repeat: no-repeat;
 	background-size: 16px 16px;
 	background-position: center;
@@ -744,7 +744,7 @@ a.skip {
 }
 
 .time-2 {
-	background-image: url(../images/skin/exit.png);
+	background-image: url(../images/skin/time2.png);
 	background-repeat: no-repeat;
 	background-size: 16px 16px;
 	background-position: center;

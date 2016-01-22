@@ -41,14 +41,14 @@
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
 													<g:hiddenField name="time" value="1"/>															
-													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
+													<g:actionSubmit class="time-1" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
 												</g:formRemote>
 												
 												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
 													<g:hiddenField name="time" value="2"/>															
-													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
+													<g:actionSubmit class="time-2" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
 												</g:formRemote>
 											</div>	
 										</td>
@@ -97,14 +97,14 @@
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
 													<g:hiddenField name="time" value="1"/>															
-													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
+													<g:actionSubmit class="time-1" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
 												</g:formRemote>
 												
 												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${confirmacaoInstance.usuario.id}"/>
 													<g:hiddenField name="time" value="2"/>															
-													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
+													<g:actionSubmit class="time-2" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
 												</g:formRemote>
 											</div>	
 										</td>
@@ -162,14 +162,14 @@
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${naoconfirmadosInstance.id}"/>
 													<g:hiddenField name="time" value="1"/>															
-													<g:actionSubmit class="time-1" value="+1" name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
+													<g:actionSubmit class="time-1" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 1"/>															
 												</g:formRemote>
 												
 												<g:formRemote name="myForm" url="[controller: 'time', action: 'adicionarJogador']" update="partida">
 													<g:hiddenField name="partidaInstanceId" value="${partidaInstanceId}"/>
 													<g:hiddenField name="usuarioInstanceId" value="${naoconfirmadosInstance.id}"/>
 													<g:hiddenField name="time" value="2"/>															
-													<g:actionSubmit class="time-2" value="+2" name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
+													<g:actionSubmit class="time-2" value=" " name="adicionarJogador" title="Adicionar Jogador ao Time 2"/>															
 												</g:formRemote>
 											</div>	
 										</td>

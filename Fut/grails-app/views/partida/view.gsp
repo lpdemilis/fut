@@ -27,6 +27,7 @@
 		<fieldset class="buttons">
 			<g:formRemote name="myForm" url="[controller: 'partida', action: 'sortearTimes']" update="times">
 				<g:hiddenField name="partidaInstanceId" value="${partidaInstance.id}"/>
+				<g:hiddenField name="acoes" value="true"/>
 				<g:actionSubmit class="create" value="Sortear Times" name="remover" />
 			</g:formRemote>
 		</fieldset>		
